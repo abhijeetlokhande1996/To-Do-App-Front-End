@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-12">
+    <app-to-do-input
+      (toDoFormDataEmitter)="getDataFromToDoInputComponent($event)"
+    ></app-to-do-input>
+    <app-to-do-list
+      [listToShow]="listToShow"
+      (taskModifyEmmiter)="getModifiedDataFromToDoListComponent($event)"
+      (takskDeleteEmitter)="deleteTask($event)"
+    ></app-to-do-list>
+  </div>
+</div>

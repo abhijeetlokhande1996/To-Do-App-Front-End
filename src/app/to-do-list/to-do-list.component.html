@@ -1,0 +1,102 @@
+<form [formGroup]="toDoListForm">
+  <div class="row">
+    <div class="col-12">
+      <ul *ngIf="_listToShow" class="list-group">
+        <ng-container>
+          <li
+            *ngFor="let item of _listToShow; let i = index"
+            class="list-group-item"
+          >
+            <ng-container
+              *ngIf="item.editFlag"
+              [formArrayName]="'editTaskControls'"
+            >
+              <div class="row">
+                <div class="col-6">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [formControlName]="i"
+                  />
+                </div>
+                <div class="col-6">
+                  <div class="row">
+                    <div class="col-6">
+                      <button
+                        class="btn btn-success"
+                        type="button"
+                        (click)="onClickUpdateItem(i, item)"
+                      >
+                        Update
+                      </button>
+                    </div>
+                    <div class="col-6">
+                      <button
+                        class="btn btn-danger"
+                        type="button"
+                        (click)="onClickCancelEdit(i)"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container
+              *ngIf="!item.editFlag"
+              [formArrayName]="'markAsCompleteCheckBoxArr'"
+            >
+              <ng-container [formGroupName]="i">
+                <label class="checkbox-inline">
+                  <input
+                    type="checkbox"
+                    [formControlName]="'isCompleteControl'"
+                  />
+                  <ng-container *ngIf="!item.editFlag && !item.isComplete">
+                    {{ item.task }}
+                  </ng-container>
+                  <ng-container *ngIf="!item.editFlag && item.isComplete">
+                    <del>{{ item.task }}</del>
+                  </ng-container>
+                </label>
+                <ng-container *ngIf="!item.isComplete">
+                  <span class="ml-3"
+                    >Scheduled at :
+                    <input
+                      [owlDateTime]="dt1"
+                      [owlDateTimeTrigger]="dt1"
+                      [min]="minDateAndTime"
+                      placeholder="Date Time"
+                      [formControlName]="'scheduleAtControl'"
+                      class="form-control"
+                      style="display: inline; width: 400px;"
+                    />
+                    <owl-date-time #dt1 hour12Timer="true"></owl-date-time>
+                  </span>
+                </ng-container>
+                <span
+                  class="float-right ml-2"
+                  *ngIf="!item.isComplete"
+                  (click)="onClickDelete(i)"
+                >
+                  <i class="fa fa-trash fa-2x"></i>
+                </span>
+                <span
+                  class="float-right ml-2"
+                  (click)="onClickEdit(i)"
+                  *ngIf="!item.isComplete"
+                >
+                  <i class="fa fa-edit fa-2x"></i>
+                </span>
+
+                <owl-date-time #dt1></owl-date-time>
+              </ng-container>
+            </ng-container>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</form>

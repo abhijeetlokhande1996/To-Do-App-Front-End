@@ -1,0 +1,23 @@
+<form [formGroup]="toDoInputForm" (ngSubmit)="onSubmitToDoInputForm()">
+  <div class="row">
+    <div class="col-8">
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          [formControlName]="'toDoInput'"
+          placeholder="what needs to be done ?"
+        />
+      </div>
+    </div>
+    <div class="col-4">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="toDoInputForm.invalid"
+      >
+        Add a Task
+      </button>
+    </div>
+  </div>
+</form>
